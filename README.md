@@ -67,3 +67,6 @@ MinecraftClient.getInstance().setScreen(new Screen(Text.of("My Screen")) {
        }
 });
 ```
+
+### Info
+Currently, the plugin is very WIP and only a few components are supported. It also only works in Figma, not FigJam.
