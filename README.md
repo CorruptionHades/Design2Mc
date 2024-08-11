@@ -57,14 +57,21 @@ Here's an example Screen which will work with the generated code:
 ```java
 MinecraftClient.getInstance().setScreen(new Screen(Text.of("My Screen")) {
 
-    private final double scaleModifier = 0.2D;
-    private final int xOff = 100, yOff = 30;
+    private TextRenderer tr;
+    private double scaleModifier = 0.2D;
+    private int xOff = 100, yOff = 30;
+    
+    @Override
+    protected void init() {
+        tr = MinecraftClient.getInstance().textRenderer;
+        super.init();
+    }
 
     @Override
     public void render(DrawContext context, int $$1, int $$2, float $$3) {
         super.render(context, $$1, $$2, $$3);
         // Generated code here:
-       }
+    }
 });
 ```
 

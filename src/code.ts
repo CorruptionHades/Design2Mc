@@ -134,7 +134,7 @@ function generateMcCode(nodes: Node[]): string[] {
     } else if (node.data instanceof Text) {
       const text = node.data as Text;
       const color = `new Color(${text.color.r}, ${text.color.g}, ${text.color.b}).getRGB()`;
-      codeLines.push(`context.drawText(MinecraftClient.getInstance().textRenderer, "${text.text}", (int) (${x} * scaleModifier) + xOff, (int) (${y} * scaleModifier) + yOff, ${color}, false);`);
+      codeLines.push(`context.drawText(tr, "${text.text}", (int) (${x} * scaleModifier) + xOff, (int) (${y} * scaleModifier) + yOff, ${color}, false);`);
     }
   });
 
