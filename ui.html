@@ -1,15 +1,62 @@
-<h2>Exporter</h2>
-<button id="create">Create</button>
-<p id="selection">Selection:</p>
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Design2Mc</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            background-color: #f0f0f0;
+        }
+
+        pre {
+            background-color: #2d2d2d;
+            color: #ffffff;
+            padding: 15px;
+            border-radius: 8px;
+            overflow-x: auto;
+            font-family: 'Courier New', Courier, monospace;
+            position: relative;
+        }
+
+        button.copy-button {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background-color: #4caf50;
+            color: #ffffff;
+            border: none;
+            padding: 5px 10px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 12px;
+        }
+
+        button.copy-button:hover {
+            background-color: #45a049;
+        }
+    </style>
+</head>
+<body>
+<pre id="code-block">
+        <button class="copy-button" onclick="copyCode()">Copy</button>
+    </pre>
 <script>
+    function copyCode() {
+        const codeBlock = document.getElementById('code-block');
+        const code = codeBlock.textContent;
+        navigator.clipboard.writeText(code).then(() => {
+            alert('Code copied to clipboard!');
+        });
+    }
 
-document.getElementById('create').onclick = () => {
-  parent.postMessage({ pluginMessage: { type: 'create-shapes' } }, '*')
-}
-
-onmessage = (event) => {
-    const message = event.data.pluginMessage
-    document.getElementById('selection').textContent = `Selection: ${message}`
-}
-
+    onmessage = (event) => {
+        const { type, codeLines } = event.data.pluginMessage;
+        if (type === 'display-code') {
+            const codeBlock = document.getElementById('code-block');
+            codeBlock.textContent = codeLines.join('\n');
+        }
+    };
 </script>
+</body>
+</html>

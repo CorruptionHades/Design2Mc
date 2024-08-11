@@ -89,8 +89,8 @@ if (figma.editorType === 'figma') {
     return new Node(node.type, x, y, x2, y2, data);
   });
 
-  const stringed = JSON.stringify(names);
-  figma.ui.postMessage(generateMcCode(names));
+  const codeLines = generateMcCode(names);
+  figma.ui.postMessage({ type: 'display-code', codeLines });
 
   figma.ui.onmessage = (msg: {type: string}) => {
     if (msg.type === 'create-shapes') {
@@ -109,7 +109,7 @@ function getData(node: SceneNode): Data {
   if (node.type === "RECTANGLE") {
     const rn = node as RectangleNode;
 
-    const fills = rn.fills as Paint[]; // Avoid @ts-ignore, instead cast properly
+    const fills = rn.fills as Paint[];
     if (!fills || fills.length === 0 || fills[0].type !== 'SOLID') {
       return new Rectangle(0, new Color(255, 255, 255));
     }
@@ -123,7 +123,7 @@ function getData(node: SceneNode): Data {
   else if (node.type === "TEXT") {
     const tn = node as TextNode;
 
-    const fills = tn.fills as Paint[]; // Avoid @ts-ignore, instead cast properly
+    const fills = tn.fills as Paint[];
     if (!fills || fills.length === 0 || fills[0].type !== 'SOLID') {
       return new Text(tn.name, tn.fontSize as number, new Color(0, 0, 0));
     }
@@ -168,12 +168,12 @@ function getOriginalCoordinates(node: SceneNode): { ox: number, oy: number } {
   return { ox: originalX, oy: originalY };
 }
 
-function generateMcCode(nodes: Node[]): string {
+function generateMcCode(nodes: Node[]): string[] {
   const scaleModifier = 1; // Example scale modifier, adjust as needed
   const xOff = 0; // Example x offset, adjust as needed
   const yOff = 0; // Example y offset, adjust as needed
 
-  let code = '';
+  const codeLines: string[] = [];
 
   nodes.forEach(node => {
     const x = node.x * scaleModifier + xOff;
@@ -184,15 +184,16 @@ function generateMcCode(nodes: Node[]): string {
     if (node.data instanceof Rectangle) {
       const rect = node.data as Rectangle;
       const color = `new Color(${rect.color.r}, ${rect.color.g}, ${rect.color.b}).getRGB()`;
-      code += `context.fill((int) (${x} * scaleModifier) + xOff, (int) (${y} * scaleModifier) + yOff, (int) (${x2} * scaleModifier) + xOff, (int) (${y2} * scaleModifier) + yOff, ${color});\n`;
-    } else if (node.data instanceof Text) {
+      codeLines.push(`context.fill((int) (${x} * scaleModifier) + xOff, (int) (${y} * scaleModifier) + yOff, (int) (${x2} * scaleModifier) + xOff, (int) (${y2} * scaleModifier) + yOff, ${color});`);
+    }
+    else if (node.data instanceof Text) {
       const text = node.data as Text;
       const color = `new Color(${text.color.r}, ${text.color.g}, ${text.color.b}).getRGB()`;
-      code += `context.drawText(MinecraftClient.getInstance().textRenderer, "${text.text}", (int) (${x} * scaleModifier) + xOff, (int) (${y} * scaleModifier) + yOff, ${color}, false);\n`;
+      codeLines.push(`context.drawText(MinecraftClient.getInstance().textRenderer, "${text.text}", (int) (${x} * scaleModifier) + xOff, (int) (${y} * scaleModifier) + yOff, ${color}, false);`);
     }
   });
 
-  return code;
+  return codeLines;
 }
 
 
