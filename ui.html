@@ -1,0 +1,15 @@
+<h2>Exporter</h2>
+<button id="create">Create</button>
+<p id="selection">Selection:</p>
+<script>
+
+document.getElementById('create').onclick = () => {
+  parent.postMessage({ pluginMessage: { type: 'create-shapes' } }, '*')
+}
+
+onmessage = (event) => {
+    const message = event.data.pluginMessage
+    document.getElementById('selection').textContent = `Selection: ${message}`
+}
+
+</script>
