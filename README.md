@@ -53,7 +53,7 @@ https://www.youtube.com/watch?v=lpteXKdE4bI
 Here's an example Screen which will work with the generated code:
 
 ```java
-MinecraftClient.getInstance().setScreen(new Screen(Text.of("gweengujw")) {
+MinecraftClient.getInstance().setScreen(new Screen(Text.of("My Screen")) {
 
     private final double scaleModifier = 0.2D;
     private final int xOff = 100, yOff = 30;
