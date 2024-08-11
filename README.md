@@ -1,3 +1,5 @@
+# Design2Mc
+
 Below are the steps to get your plugin running. You can also find instructions at:
 
   https://www.figma.com/plugin-docs/plugin-quickstart-guide/
@@ -38,3 +40,28 @@ We recommend writing TypeScript code using Visual Studio code:
     you reopen Visual Studio Code.
 
 That's it! Visual Studio Code will regenerate the JavaScript file every time you save.
+
+---
+
+## Usage
+
+Use the Figma Plugin Context Action to generate the Minecraft code for your selection.
+
+Showcase:
+https://www.youtube.com/watch?v=lpteXKdE4bI
+
+Here's an example Screen which will work with the generated code:
+
+```java
+MinecraftClient.getInstance().setScreen(new Screen(Text.of("gweengujw")) {
+
+    private final double scaleModifier = 0.2D;
+    private final int xOff = 100, yOff = 30;
+
+    @Override
+    public void render(DrawContext context, int $$1, int $$2, float $$3) {
+        super.render(context, $$1, $$2, $$3);
+        // Generated code here:
+       }
+});
+```
