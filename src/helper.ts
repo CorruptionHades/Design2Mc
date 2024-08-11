@@ -45,12 +45,12 @@ export class Node {
 export class Data {}
 
 export class Rectangle extends Data {
-    cornerRadius: number;
+    cornerRadius: number | PluginAPI["mixed"];
     color?: Color;
     imagePath?: string;
     gradientColor?: Color;
 
-    constructor(cornerRadius: number, color?: Color, imagePath?: string, gradientColor?: Color) {
+    constructor(cornerRadius: number | PluginAPI["mixed"], color?: Color, imagePath?: string, gradientColor?: Color) {
         super();
         this.cornerRadius = cornerRadius;
         this.color = color;

@@ -41,7 +41,7 @@ We recommend writing TypeScript code using Visual Studio code:
 
 That's it! Visual Studio Code will regenerate the JavaScript file every time you save.
 
-In Intelij IDEA use ``tsc -w`` in the Terminal to compile in watch mode. 
+In Intelij IDEA use ``npm run watch`` in the Terminal to compile in watch mode. 
 
 ---
 
